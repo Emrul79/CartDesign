@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import product1 from "../assets/productsimage/image 1.png";
 import { AppProvider } from "../context/context";
+import { getImage } from "../utils/getImage";
 
 export default function ProductCard({ product }) {
   const [buttonclicked, setButtonClicked] = useState(false);
@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
     <div className="bg-gray-100 rounded-lg overflow-hidden transition-transform hover:scale-[1.02] duration-300">
       <div className="h-48 bg-gray-200 flex items-center justify-center">
         <img
-          src={product1}
+          src={getImage(product.name)}
           alt="Gradient Graphic T-shirt"
           className="h-full w-auto object-cover"
         />

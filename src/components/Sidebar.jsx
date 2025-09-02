@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import product1 from "../assets/productsimage/image 1.png";
 import { AppProvider } from "../context/context";
+import { getImage } from "../utils/getImage";
 import OrderSummary from "./OrderSummary";
 export default function Sidebar() {
   const [increment, setIncrement] = useState(1);
@@ -43,7 +43,7 @@ export default function Sidebar() {
             >
               <div className="w-16 h-16 bg-gray-100 rounded flex-shrink-0 flex items-center justify-center">
                 <img
-                  src={product1}
+                  src={getImage(product.name)}
                   alt="Gradient Graphic T-shirt"
                   className="h-full w-auto object-cover"
                 />
