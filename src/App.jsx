@@ -1,10 +1,15 @@
+import { useState } from "react";
+import { AppProvider } from "./context/context";
+import MainPage from "./pages/MainPage";
+
 function App() {
+  const [cartData, setCartData] = useState([]);
+  console.log(cartData);
+
   return (
-    <div className="flex p-20 w-full bg-slate-200 h-screen">
-      <h1 className="text-3xl font-bold  text-blue-500">
-        Successfully Starting a new project.
-      </h1>
-    </div>
+    <AppProvider.Provider value={{ cartData, setCartData }}>
+      <MainPage></MainPage>;
+    </AppProvider.Provider>
   );
 }
 
