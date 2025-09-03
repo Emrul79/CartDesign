@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AppProvider } from "../context/context";
 
 export default function OrderSummary() {
-  const { cartData } = React.useContext(AppProvider);
+  const { state } = React.useContext(AppProvider);
 
   const [promoCode, setPromoCode] = useState("");
   const [discountRate, setDiscountRate] = useState(0); // percentage like 0.2 for 20%
@@ -17,7 +17,7 @@ export default function OrderSummary() {
   };
 
   // Calculate subtotal
-  const subtotal = cartData.reduce(
+  const subtotal = state.cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );

@@ -1,41 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { AppProvider } from "../context/context";
 import { getImage } from "../utils/getImage";
 import OrderSummary from "./OrderSummary";
 export default function Sidebar() {
-  const [increment, setIncrement] = useState(1);
-  const { cartData, setCartData } = React.useContext(AppProvider);
-
-  const handleDelete = (productid) => {
-    setCartData(cartData.filter((product) => product.id !== productid));
-  };
-
-  const handleIncrement = (productid) => {
-    setCartData((prev) =>
-      prev.map((p) =>
-        p.id === productid
-          ? { ...p, quantity: Math.min(p.stock, p.quantity + 1) } // clamp to stock
-          : p
-      )
-    );
-  };
-
-  const handleDecrement = (productid) => {
-    setCartData((prev) =>
-      prev.map((p) =>
-        p.id === productid
-          ? { ...p, quantity: Math.max(1, p.quantity - 1) } // at least 1
-          : p
-      )
-    );
-  };
+  const { state, dispatch } = React.useContext(AppProvider);
 
   return (
     <div className="lg:col-span-1">
       <div className="bg-white rounded-lg p-6 border border-gray-200">
         <h2 className="text-2xl font-bold mb-6">YOUR CART</h2>
-        {cartData.map((product) => {
+        {state.cart.map((product) => {
           return (
             <div
               key={product.id}
@@ -52,7 +27,9 @@ export default function Sidebar() {
                 <div className="flex justify-between">
                   <h3 className="font-medium">{product.title}</h3>
                   <span
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() =>
+                      dispatch({ type: "REMOVE_FROM_CART", payload: product })
+                    }
                     className="text-red-500 text-sm cursor-pointer"
                   >
                     ×
@@ -64,14 +41,24 @@ export default function Sidebar() {
                   <p className="font-bold">${product.price}</p>
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => handleDecrement(product.id)}
+                      onClick={() =>
+                        dispatch({
+                          type: "DECREMENT_QUANTITY",
+                          payload: product,
+                        })
+                      }
                       className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center"
                     >
                       −
                     </button>
                     <span className="text-sm">{product.quantity}</span>
                     <button
-                      onClick={() => handleIncrement(product.id)}
+                      onClick={() =>
+                        dispatch({
+                          type: "INCREMENT_QUANTITY",
+                          payload: product,
+                        })
+                      }
                       className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center"
                     >
                       +
